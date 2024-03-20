@@ -48,8 +48,7 @@ ActiveAdmin.register Product do
       f.input :description
       f.input :price
       f.input :quantity
-      f.input :category, as: :select, collection: Category.all.collect { |c| [c.name, c.id] }
-      f.input :image, as: :file, hint: f.object.image.attached? ? image_tag(url_for(f.object.image), width: '50px') : content_tag(:span, 'No image yet') # Ensure 'px' is specified
+      f.input :image, as: :file, hint: f.object.image.attached? ? image_tag(url_for(f.object.image), width: '50px') : content_tag(:span, 'No image yet') 
     end
     f.actions
   end
