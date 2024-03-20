@@ -1,10 +1,23 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+require 'httparty'
+
+# Fetch the data from the API
+response = HTTParty.get('https://fake-coffee-api.vercel.app/api/')
+if response.success?
+  products_data = response.parsed_response
+
+  # Seed the products
+  products_data.each do |product_data|
+    product = Product.create(
+      name: product_data['name'], # Adjust this if the JSON key for the name is different
+      description: product_data['description'], # Adjust this if the JSON key for the description is different
+      price: product_data['price'], # Adjust this if the JSON key for the price is different
+      quantity: product_data['inventoryCount'] # Adjust this if the JSON key for quantity is different
+     
+    )
+    puts "Seeded product: #{product.name}" if product.persisted?
+  end
+
+  puts "Seeded #{Product.count} products."
+else
+  puts "Failed to retrieve data from API. Status code: #{response.code}"
+end
