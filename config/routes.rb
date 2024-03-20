@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :admins
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :admins, ActiveAdmin::Devise.config
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Define a single root path here
+  # You need to choose which one you want as your root path.
+  # If the admin dashboard is the landing page, use the line below:
+  root to: 'admin/dashboard#index'
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # If you have another controller and action that serves as the homepage for non-admin users,
+  # comment out the line above and uncomment the line below, replacing 'some_controller#some_action'
+  # with the appropriate controller and action.
+  # root to: 'some_controller#some_action'
 end
