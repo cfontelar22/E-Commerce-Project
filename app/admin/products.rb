@@ -41,15 +41,19 @@ ActiveAdmin.register Product do
     end
     active_admin_comments
   end
-
   form html: { enctype: "multipart/form-data" } do |f|
-    f.inputs 'Product' do
+    f.inputs 'Product Details' do
       f.input :name
       f.input :description
       f.input :price
       f.input :quantity
-      f.input :image, as: :file, hint: f.object.image.attached? ? image_tag(url_for(f.object.image), width: '50px') : content_tag(:span, 'No image yet') 
+      f.input :category, as: :select, collection: Category.all.collect { |c| [c.name, c.id] }
+      if f.object.persisted? && f.object.image.attached?
+        f.input :image, as: :file, hint: image_tag(url_for(f.object.image), width: '150x')
+      else
+        f.input :image, as: :file
+      end
     end
     f.actions
   end
-end
+end 

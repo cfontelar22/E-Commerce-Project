@@ -1,5 +1,5 @@
 require 'httparty'
-
+2
 # Fetch the data from the API
 response = HTTParty.get('https://fake-coffee-api.vercel.app/api/')
 if response.success?
