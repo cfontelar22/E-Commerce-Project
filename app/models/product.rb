@@ -1,2 +1,3 @@
 class Product < ApplicationRecord
-end
+    has_many_attached :images
+  end
