@@ -1,19 +1,14 @@
-<h1>Products</h1>
-
-<% if @category %>
-  <h2>Category: <%= @category.name %></h2>
-<% end %>
+a
+<h1>All Coffee</h1>
 
 <div class="products-list">
   <% @products.each do |product| %>
     <div class="product">
-      <h3><%= link_to product.name, product_path(product) %></h3>
-      <p><%= product.description %></p>
-      <p>Price: <%= number_to_currency(product.price) %></p>
-      <!-- Link to the product's show page -->
+      <%= image_tag product.image, class: 'product-image' if product.image.attached? %>
+      <h3 class="product-name"><%= product.name %></h3>
       <%= link_to 'View Product', product_path(product), class: 'view-product-btn' %>
     </div>
   <% end %>
 </div>
 
-<%= paginate @products %>
+<%= paginate @products, window: 2 %>
