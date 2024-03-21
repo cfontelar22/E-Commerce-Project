@@ -14,3 +14,13 @@ ActiveAdmin.register Contact do
     end
   end
 end
+
+controller do
+  def create
+    if About.count.zero? || Contact.count.zero?
+      super
+    else
+      redirect_to collection_path, notice: 'Already created. You can only edit the existing one.'
+    end
+  end
+end
