@@ -1,17 +1,18 @@
 require 'httparty'
-
+require 'open-uri'
 
 # Destroy existing data
-Category.destroy_all
 Product.destroy_all
+Category.destroy_all
 
 # Create some categories
-categories = ['Single Origin', 'Blended', 'Espresso']
-categories.each do |category_name|
-  Category.create!(name: category_name)
+unique_categories = ['Single Origin', 'Blended', 'Espresso', 'Light Roast', 'Dark Roast']
+unique_categories.each do |category_name|
+  Category.find_or_create_by!(name: category_name)
 end
+# Ensure there is a 'General' category
+general_category = Category.find_or_create_by!(name: 'General')
 puts "Created #{Category.count} categories."
-
 
 # Fetch the data from the API
 response = HTTParty.get('https://fake-coffee-api.vercel.app/api/')
@@ -20,32 +21,30 @@ if response.success?
 
   # Seed the products
   products_data.each do |product_data|
-    category = Category.find_or_create_by(name: product_data['flavor_profile'] || 'General')
+    # Find the specific category or use 'General'
+    category_name = product_data['flavor_profile'].first 
+    category = Category.find_by(name: category_name) || general_category
 
+    # Create the product
     product = Product.create(
       name: product_data['name'],
       description: product_data['description'],
       price: product_data['price'],
-      quantity: product_data['inventoryCount'] 
-      category: category,
-      flavor_profile: product_data['flavor_profile'],
-      grind_option: product_data['grind_option'],
-      roast_level: product_data['roast_level'],
-      region: product_data['region'],
-      
-      # You would handle image attachment here
-      # For example, using ActiveStorage:
-      # image: Rails.root.join("path/to/downloaded/image.jpg").open
+      quantity: product_data['inventoryCount'],
+      category: category
+
     )
 
-    if product.persisted?
-      puts "Seeded product: #{product.name}"
-      # If the API provides a direct URL to an image:
-      # downloaded_image = URI.open(product_data['image_url'])
-      # product.image.attach(io: downloaded_image, filename: 'product_image.jpg')
-    else
-      puts "Failed to create product: #{product.name}"
-      puts product.errors.full_messages
+    # Attach the image if the product was saved and an image URL is available
+    if product.persisted? && product_data['image_url'].present?
+      begin
+        # Open the image URL and attach it to the product
+        downloaded_image = URI.open(product_data['image_url'])
+        product.image.attach(io: downloaded_image, filename: "product_#{product.id}.jpg")
+        puts "Image attached to product: #{product.name}"
+      rescue OpenURI::HTTPError => e
+        puts "Failed to download or attach image for product: #{product.name}. Error: #{e.message}"
+      end
     end
   end
 
