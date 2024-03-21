@@ -1,4 +1,3 @@
-# db/seeds.rb
 require 'httparty'
 require 'faker'
 require 'open-uri'
@@ -27,16 +26,16 @@ if response.success?
     # Find the specific category or use 'General'
     category_name = product_data['flavor_profile'].first
     category = Category.find_by(name: category_name) || general_category
-
-    # Create the product with a unique name and slightly altered price
+  
+    # Create the product without appending the index to the name
     product = Product.create(
-      name: "#{product_data['name']} ##{index + 1}", # Append index to make name unique
+      name: product_data['name'], # Use the original name without a number
       description: product_data['description'],
-      price: product_data['price'].to_f + Faker::Commerce.price(range: 0..0.99), # Slightly alter the price
+      price: product_data['price'].to_f + Faker::Commerce.price(range: 0..0.99), 
       quantity: product_data['inventoryCount'],
       category: category
     )
-
+  
     # Attach the image if the product was saved and an image URL is available
     if product.persisted? && product_data['image_url'].present?
       begin
