@@ -1,38 +1,40 @@
+# db/seeds.rb
 require 'httparty'
+require 'faker'
 require 'open-uri'
 
 # Destroy existing data
 Product.destroy_all
 Category.destroy_all
 
-# Create some categories
+# Create categories
 unique_categories = ['Single Origin', 'Blended', 'Espresso', 'Light Roast', 'Dark Roast']
 unique_categories.each do |category_name|
   Category.find_or_create_by!(name: category_name)
 end
+
 # Ensure there is a 'General' category
 general_category = Category.find_or_create_by!(name: 'General')
+
 puts "Created #{Category.count} categories."
 
 # Fetch the data from the API
 response = HTTParty.get('https://fake-coffee-api.vercel.app/api/')
 if response.success?
-  products_data = response.parsed_response
+  products_data = response.parsed_response * 5 # Multiply the array by 5 to get 100 products
 
-  # Seed the products
-  products_data.each do |product_data|
+  products_data.each_with_index do |product_data, index|
     # Find the specific category or use 'General'
-    category_name = product_data['flavor_profile'].first 
+    category_name = product_data['flavor_profile'].first
     category = Category.find_by(name: category_name) || general_category
 
-    # Create the product
+    # Create the product with a unique name and slightly altered price
     product = Product.create(
-      name: product_data['name'],
+      name: "#{product_data['name']} ##{index + 1}", # Append index to make name unique
       description: product_data['description'],
-      price: product_data['price'],
+      price: product_data['price'].to_f + Faker::Commerce.price(range: 0..0.99), # Slightly alter the price
       quantity: product_data['inventoryCount'],
       category: category
-
     )
 
     # Attach the image if the product was saved and an image URL is available
