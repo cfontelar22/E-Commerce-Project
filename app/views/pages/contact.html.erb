@@ -1,0 +1,5 @@
+<div class="contact">
+  <h1>Contact Us</h1>
+  <!-- Use instance variable from the controller -->
+  <%= @contact.content.html_safe if @contact.present? %>
+</div>
