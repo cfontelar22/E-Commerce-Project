@@ -2,7 +2,11 @@
 <div class="products-list">
   <% @products.each do |product| %>
     <div class="product">
-      <!-- Display product info here -->
+      <%= image_tag(product.image, class: 'product-image') if product.image.attached? %>
+      <h3 class="product-name"><%= product.name %></h3>
+      <%= link_to 'View Product', product_path(product), class: 'view-product-btn' %>
     </div>
   <% end %>
 </div>
+
+<%= paginate @products %>
