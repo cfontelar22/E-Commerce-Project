@@ -1,0 +1,15 @@
+<h1><%= @product.name %></h1>
+
+<div class="product-details">
+  <p><%= @product.description %></p>
+  <p>Price: <%= number_to_currency(@product.price) %></p>
+  <p>Quantity: <%= @product.quantity %></p>
+
+  <!-- Display the product image if it exists -->
+  <% if @product.image.attached? %>
+    <%= image_tag @product.image, class: 'product-image' %>
+  <% end %>
+
+  <!-- Link back to the products list -->
+  <%= link_to 'Back to Products', products_path, class: 'back-btn' %>
+</div>
