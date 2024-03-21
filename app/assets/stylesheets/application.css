@@ -1,36 +1,144 @@
+/* General Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+}
+
+.banner {
+  text-align: center;
+  padding: 2em;
+  background: #333;
+  color: white;
+}
+
+.featured-products h2 {
+  text-align: center;
+  margin-top: 1em;
+}
+
+/* Products List */
 .products-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1em;
-  }
-  
-  .product {
-    border: 1px solid #ddd;
-    padding: 1em;
-    border-radius: 8px;
-  }
-  
-  .product h3 {
-    margin: 0 0 0.5em;
-  }
-  
-  .product-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .view-product-btn, .back-btn {
-    display: inline-block;
-    margin-top: 1em;
-    padding: 0.5em 1em;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-  }
-  
-  .view-product-btn:hover, .back-btn:hover {
-    background-color: #0056b3;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.product {
+  background: white;
+  border: none;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px; 
+  text-align: center;
+
+
+}
+
+.product:hover {
+  transform: translateY(-5px);
+}
+
+.product h3 {
+  color: #333;
+  margin: 0.5em 0;
+}
+
+.product p {
+  color: #555;
+}
+
+.product-name {
+  font-size: 1em; 
+  margin-top: 10px;
+}
+
+.product-image {
+  width: 100%;
+  max-width: 200px; 
+  height: auto;
+  object-fit: contain; 
+  margin: 0 auto; 
+}
+
+.view-product-btn, .back-btn {
+  display: block;
+  width: 80%;
+  margin-top: 1em;
+  padding: 0.75em;
+  background-color: #396462;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.view-product-btn:hover, .back-btn:hover {
+  background-color: #003d82;
+}
+
+/* Navbar Styles */
+nav {
+  background: #1c1c1c;
+  padding: 0.5em 1em;
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background: #555;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background: #1c1c1c;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  color: white;
+  padding: 0.75em 1em;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #555;
+}
+
+/* Responsive Navbar Toggle */
+.nav-toggle {
+  display: none;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  background-color: #fff;
+}
