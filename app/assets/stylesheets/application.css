@@ -1,15 +1,36 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+.products-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1em;
+  }
+  
+  .product {
+    border: 1px solid #ddd;
+    padding: 1em;
+    border-radius: 8px;
+  }
+  
+  .product h3 {
+    margin: 0 0 0.5em;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .view-product-btn, .back-btn {
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .view-product-btn:hover, .back-btn:hover {
+    background-color: #0056b3;
+  }
+  
