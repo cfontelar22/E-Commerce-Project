@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
     belongs_to :category
     has_one_attached :image
+    scope :featured, -> { where(featured: true) }
+
   
     # Attributes that are allowed to be searched by Ransack
     def self.ransackable_attributes(auth_object = nil)
