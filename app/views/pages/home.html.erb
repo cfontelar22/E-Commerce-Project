@@ -1,5 +1,36 @@
-<div class="home">
-  <h1>Welcome to Our Coffee Store!</h1>
-  <p>Find your perfect cup of coffee with us.</p>
-  <!-- Add more content as needed -->
+<div class="banner">
+  <h1>Welcome to Kape Kapamilya</h1>
+  <p>Your journey towards an exceptional coffee experience begins here.</p>
 </div>
+
+<section class="featured-products">
+  <h2>CURATED JUST FOR YOU</h2>
+  <p class="section-intro">Discover our selection of premium coffees from around the globe.</p>
+  <div class="products-list">
+    <% @featured_products.each do |product| %>
+      <div class="product">
+        <%= image_tag product.image, class: 'product-image' if product.image.attached? %>
+        <h3 class="product-name"><%= product.name %></h3>
+        <%= link_to 'View Product', product_path(product), class: 'view-product-btn' %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<section class="all-products">
+  <h2>ALL COFFEE SELECTIONS</h2>
+  <p class="section-intro">From exotic locales to classic favorites, explore our complete catalog of coffee blends and single origins.</p>
+  <div class="products-list">
+    <% @all_products.each do |product| %>
+      <div class="product">
+        <%= image_tag product.image, class: 'product-image' if product.image.attached? %>
+        <h3 class="product-name"><%= product.name %></h3>
+        <%= link_to 'View Product', product_path(product), class: 'view-product-btn' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="pagination">
+  <%= paginate @all_products %>
+</div>
+</section>
