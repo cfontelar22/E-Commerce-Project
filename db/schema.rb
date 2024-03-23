@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_21_024655) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_21_183453) do
   create_table "abouts", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
@@ -143,6 +143,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_024655) do
     t.datetime "updated_at", null: false
     t.integer "category_id"
     t.boolean "featured"
+    t.string "region"
+    t.integer "weight"
+    t.integer "roast_level"
+    t.text "flavor_profile"
+    t.text "grind_option"
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 

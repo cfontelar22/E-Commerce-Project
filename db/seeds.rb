@@ -7,7 +7,7 @@ Product.destroy_all
 Category.destroy_all
 
 # Create categories
-unique_categories = ['Single Origin', 'Blended', 'Espresso', 'Light Roast','Medium Roast' 'Dark Roast']
+unique_categories = ['Single Origin', 'Blended', 'Espresso', 'Light Roast','Medium Roast', 'Dark Roast']
 unique_categories.each do |category_name|
   Category.find_or_create_by!(name: category_name)
 end
