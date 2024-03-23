@@ -11,7 +11,7 @@ ActiveAdmin.register Product do
     column :category
     column 'Image' do |product|
       if product.image.attached?
-        image_tag url_for(product.image), width: '50px' # Ensure 'px' is specified
+        image_tag url_for(product.image), width: '50px' 
       else
         'No image'
       end
@@ -22,7 +22,7 @@ ActiveAdmin.register Product do
   filter :name
   filter :price
   filter :quantity
-  filter :category, as: :select, collection: -> { Category.all }
+  filter :category, as: :select
 
   show do
     attributes_table do
@@ -33,7 +33,7 @@ ActiveAdmin.register Product do
       row :category
       row :image do |product|
         if product.image.attached?
-          image_tag url_for(product.image), width: '50%' # Ensure 'px' is specified if needed
+          image_tag url_for(product.image), width: '50%' #
         else
           'No image'
         end
@@ -41,6 +41,7 @@ ActiveAdmin.register Product do
     end
     active_admin_comments
   end
+
   form html: { enctype: "multipart/form-data" } do |f|
     f.inputs 'Product Details' do
       f.input :name
@@ -49,11 +50,14 @@ ActiveAdmin.register Product do
       f.input :quantity
       f.input :category, as: :select, collection: Category.all.collect { |c| [c.name, c.id] }
       if f.object.persisted? && f.object.image.attached?
-        f.input :image, as: :file, hint: image_tag(url_for(f.object.image), width: '150x')
+        f.input :image, as: :file, hint: image_tag(url_for(f.object.image), width: '150px')
       else
         f.input :image, as: :file
       end
     end
     f.actions
   end
-end 
+
+  controller do
+  end
+end

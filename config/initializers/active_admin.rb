@@ -6,6 +6,7 @@ ActiveAdmin.setup do |config|
   # within the application controller to ensure a currently logged in admin.
   config.authentication_method = :authenticate_admin!
 
+
   # == Current User
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
