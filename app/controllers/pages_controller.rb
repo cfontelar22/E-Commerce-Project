@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   def home
+    @search = Product.ransack(params[:q])
     @featured_products = Product.order(created_at: :desc).limit(6)
     @all_products = Product.page(params[:page]).per(10)
   end

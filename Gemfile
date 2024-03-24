@@ -9,6 +9,7 @@ gem 'sassc'
 gem 'httparty'
 gem 'faker'
 gem 'nokogiri'
+gem 'ransack'
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
