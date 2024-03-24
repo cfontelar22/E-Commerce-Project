@@ -3,6 +3,27 @@
   <p>Your journey towards an exceptional coffee experience begins here.</p>
 </div>
 
+<div id="product-filters" class="filter-section">
+  <%= form_tag products_path, method: :get, class: "filter-form" do %>
+    <div class="filter-option">
+      <%= label_tag :on_sale, 'On Sale' %>
+      <%= check_box_tag :on_sale, 'true', params[:on_sale] == 'true' %>
+    </div>
+    
+    <div class="filter-option">
+      <%= label_tag :new, 'New' %>
+      <%= check_box_tag :new, 'true', params[:new] == 'true' %>
+    </div>
+    
+    <div class="filter-option">
+      <%= label_tag :recently_updated, 'Recently Updated' %>
+      <%= check_box_tag :recently_updated, 'true', params[:recently_updated] == 'true' %>
+    </div>
+    
+    <%= submit_tag 'Filter', name: nil, class: "filter-button" %>
+  <% end %>
+</div>
+
 <section class="featured-products">
   <h2>CURATED JUST FOR YOU</h2>
   <p class="section-intro">Discover our selection of premium coffees from around the globe.</p>

@@ -1,12 +1,43 @@
-<h1><%= @category.name %> Products</h1>
+<div class="banner">
+  <h1><%= @category.name %> Products</h1>
+  <p>Embark on a global coffee expedition with our curated collection. From the single-origin treasures that capture the essence of their native soil to our masterfully crafted blends that bring together the best of different regions, each cup promises a unique journey. Dive into our selection: the light roasts are vibrant and uplifting, the medium roasts perfectly balanced, and the dark roasts are rich and bold. Our Espresso offerings are concentrated delights, while each roast level - light, medium, and dark - offers a different pathway to coffee satisfaction. Embrace the adventure that awaits in every brew.</p>
+</div>
+
+<div id="product-filters" class="filter-section">
+  <%= form_tag products_path, method: :get, class: "filter-form" do %>
+    <div class="filter-option">
+      <%= label_tag :on_sale, 'On Sale' %>
+      <%= check_box_tag :on_sale, 'true', params[:on_sale] == 'true' %>
+    </div>
+    
+    <div class="filter-option">
+      <%= label_tag :new, 'New' %>
+      <%= check_box_tag :new, 'true', params[:new] == 'true' %>
+    </div>
+    
+    <div class="filter-option">
+      <%= label_tag :recently_updated, 'Recently Updated' %>
+      <%= check_box_tag :recently_updated, 'true', params[:recently_updated] == 'true' %>
+    </div>
+    
+    <%= submit_tag 'Filter', name: nil, class: "filter-button" %>
+  <% end %>
+</div>
+
 <div class="products-list">
   <% @products.each do |product| %>
-    <div class="product">
-      <%= image_tag(product.image, class: 'product-image') if product.image.attached? %>
+    <div class="product <%= 'on-sale' if product.on_sale %>">
+      <%= image_tag product.image, class: 'product-image' if product.image.attached? %>
       <h3 class="product-name"><%= product.name %></h3>
       <%= link_to 'View Product', product_path(product), class: 'view-product-btn' %>
+      <% if product.on_sale %>
+        <div class="sale-badge">Sale!</div>
+      <% end %>
     </div>
   <% end %>
 </div>
 
-<%= paginate @products %>
+
+<div class="pagination">
+  <%= paginate @products %>
+</div>

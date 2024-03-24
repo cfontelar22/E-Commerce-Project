@@ -19,11 +19,17 @@ body {
   margin: 0 0 0.5em 0;
 }
 
+/* Banner Paragraph Styles */
 .banner p {
   font-size: 1.2em;
-  margin: 0;
-  font-weight: lighter;
+  margin: 0 auto; 
+  font-weight: 300;
+  color: #ffffff; 
+  line-height: 1.6; 
+  max-width: 800px; 
+  padding: 0 20px; /
 }
+
 
 /* Featured Products Styles */
 .featured-products {
@@ -253,3 +259,55 @@ nav a:hover {
   list-style: none;
 }
 
+/* Product Filtering */
+#product-filters {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.1);
+  margin-top: 2em;
+}
+
+#product-filters .filter-option {
+  margin-bottom: 10px;
+}
+
+#product-filters .filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#product-filters .filter-button {
+  padding: 8px 16px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#product-filters .filter-button:hover {
+  background-color: #666666;
+}
+
+/* On-Sale Product Styling */
+.product.on-sale {
+  border: 2px solid #e74c3c; /* Example red border */
+  position: relative;
+}
+
+.sale-badge {
+  content: 'Sale!';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  border-bottom-left-radius: 4px;
+}

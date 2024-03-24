@@ -1,19 +1,23 @@
-<h1><%= @product.name %></h1>
-
 <div class="product-details">
+  <h1><%= @product.name %></h1>
+
+  <%= image_tag @product.image, class: 'product-image' if @product.image.attached? %>
+
   <p><%= @product.description %></p>
-  <p>Price: <%= number_to_currency(@product.price) %></p>
-  <p>Quantity: <%= @product.quantity %></p>
-  <p>Region: <%= @product.region %></p>
-  <p>Weight: <%= @product.weight %>g</p>
-  <p>Roast Level: <%= @product.roast_level %></p>
-  <p>Flavor Profile: [<%= @product.flavor_profile %>]</p>
-  <p>Grind Option: [<%= @product.grind_option %>]</p>
-
-
-  <% if @product.image.attached? %>
-    <%= image_tag @product.image, class: 'product-image' %>
-  <% end %>
+  <strong>Price:</strong>
+  <p><%= number_to_currency(@product.price) %></p>
+  <strong>Quantity:</strong>
+  <p><%= @product.quantity %></p>
+  <strong>Region:</strong>
+  <p><%= @product.region %></p>
+  <strong>Weight:</strong>
+  <p><%= @product.weight %>g</p>
+  <strong>Roast Level:</strong>
+  <p><%= @product.roast_level %></p>
+  <strong>Flavor Profile:</strong>
+  <p>[<%= @product.flavor_profile %>]</p>
+  <strong>Grind Option:</strong>
+  <p>[<%= @product.grind_option %>]</p>
 
   <%= link_to 'Back to Products', products_path, class: 'back-btn' %>
 </div>
