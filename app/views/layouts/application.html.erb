@@ -27,6 +27,13 @@
 </div>
   <%= link_to 'About Us', about_path, class: 'nav-link' %>
   <%= link_to 'Contact', contact_path, class: 'nav-link' %>
+
+  <div class="cart-summary">
+  <%= link_to "Cart (#{session[:cart]&.length || 0})", cart_path, class: 'nav-link', id: 'cart-count' %>
+</div>
+
+</div>
+
 </nav>
 
 

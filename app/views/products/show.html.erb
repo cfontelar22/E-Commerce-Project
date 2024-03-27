@@ -19,5 +19,14 @@
   <strong>Grind Option:</strong>
   <p>[<%= @product.grind_option %>]</p>
 
+<div class="cart">
+  <%= form_tag add_to_cart_cart_path, method: :post do %>
+    <%= hidden_field_tag :product_id, @product.id %>
+    <%= label_tag :quantity, 'Quantity:' %>
+    <%= number_field_tag :quantity, 1, min: 1, max: @product.quantity, class: 'quantity-field' %>
+    <%= submit_tag 'Add to Cart', class: 'add-to-cart-btn' %>
+  <% end %>
+</div>
+
   <%= link_to 'Back to Products', products_path, class: 'back-btn' %>
 </div>

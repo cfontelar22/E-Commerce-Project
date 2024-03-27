@@ -53,10 +53,13 @@
   <p class="section-intro">From exotic locales to classic favorites, explore our complete catalog of coffee blends and single origins.</p>
   <div class="products-list">
     <% @all_products.each do |product| %>
-      <div class="product">
+      <div class="product  <%= 'on-sale' if product.on_sale %>">
         <%= image_tag product.image, class: 'product-image' if product.image.attached? %>
         <h3 class="product-name"><%= product.name %></h3>
         <%= link_to 'View Product', product_path(product), class: 'view-product-btn' %>
+        <% if product.on_sale %>
+        <div class="sale-badge">Sale!</div>
+      <% end %>
       </div>
     <% end %>
   </div>
