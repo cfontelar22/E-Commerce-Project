@@ -29,14 +29,9 @@
   <%= link_to 'Contact', contact_path, class: 'nav-link' %>
 
   <div class="cart-summary">
-  <%= link_to "Cart (#{session[:cart]&.length || 0})", cart_path, class: 'nav-link', id: 'cart-count' %>
-</div>
-
-</div>
-
+    <%= link_to "Cart (#{@item_count})", cart_path, class: 'nav-link', id: 'cart-count' %>
+  </div>
 </nav>
-
-
 <%= yield %>
 
 </body>

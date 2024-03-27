@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background: #f7f7f7;
@@ -316,3 +316,52 @@ nav a:hover {
   font-weight: bold;
   border-bottom-left-radius: 4px;
 }
+
+/* Cart Styling */
+.shopping-cart {
+  font-family: Arial, sans-serif;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.shopping-cart h1 {
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.quantity-field {
+  width: 60px;
+}
+
+.update-btn, .remove-btn {
+  background-color:  #292f36;
+  color: white;
+  padding: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.remove-btn {
+  background-color: #f44336;
+}
+
+.cart-total {
+  margin-top: 20px;
+  float: right;
+  font-size: 20px;
+}
+
+.cart-total strong {
+  color: #333;
+}
+
