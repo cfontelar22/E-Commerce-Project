@@ -2,7 +2,17 @@ class Cart
   attr_reader :items
 
   def initialize(session_cart)
-    @items = session_cart || []
+    @items = session_cart.map do |item|
+      { 'product_id' => item['product_id'].to_i, 'quantity' => item['quantity'].to_i }
+    end
+  end
+
+  # Make sure total_price is a public method
+  def total_price
+    @items.sum do |item|
+      product = Product.find(item['product_id'])
+      product.price * item['quantity']
+    end
   end
 
   def add_product(product_id, quantity = 1)
@@ -26,12 +36,6 @@ class Cart
     @items.delete_if { |item| item['product_id'] == product_id }
   end
 
-  def total_price
-    @items.sum do |item|
-      product = Product.find_by(id: item['product_id'])
-      product ? product.price * item['quantity'] : 0
-    end
-  end
 
   # Helper method to get a list of products
   def products
@@ -40,4 +44,8 @@ class Cart
       { product: product, quantity: item['quantity'] } if product
     end.compact
   end
+end
+
+def calculate_subtotal
+  order_items.sum(&:total_price) # Ensure you have a 'total_price' method in OrderItem
 end

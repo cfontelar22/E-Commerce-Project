@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   scope :on_sale, -> { where(on_sale: true) }
   scope :newly_added, -> { where('created_at >= ?', 3.days.ago) }
   scope :recently_updated, -> { where('updated_at >= ?', 3.days.ago).where.not(id: newly_added.select(:id)) }
+  has_many :order_items
 
   # Attributes that are allowed to be searched by Ransack
   def self.ransackable_attributes(auth_object = nil)

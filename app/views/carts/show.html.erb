@@ -41,7 +41,10 @@
       </tbody>
     </table>
     <div class="cart-total">
-      <strong>Total Price:</strong> <%= number_to_currency(@cart.total_price) %>
+      <strong>Subtotal:</strong> <%= number_to_currency(@cart.total_price) %>
+    </div>
+    <div class="checkout-link">
+      <%= link_to 'Checkout', new_checkout_path, class: 'checkout-btn' %>
     </div>
   <% else %>
     <p>Your cart is empty.</p>

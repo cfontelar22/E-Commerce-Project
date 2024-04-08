@@ -1,0 +1,27 @@
+<h1>Order Summary</h1>
+
+<p><strong>Order ID:</strong> <%= @order.id %></p>
+<p><strong>Date:</strong> <%= @order.created_at.strftime("%B %e, %Y") %></p>
+
+<h2>Customer Information:</h2>
+<p><strong>Name:</strong> <%= @order.customer.last_name %></p>
+<p><strong>Email:</strong> <%= @order.customer.email %></p>
+<p><strong>Address:</strong> <%= @order.customer.address %></p>
+<p><strong>City:</strong> <%= @order.customer.city %></p>
+<p><strong>Province:</strong> <%= @order.customer.province %></p>
+<p><strong>Postal Code:</strong> <%= @order.customer.postal_code %></p>
+
+<h2>Order Items:</h2>
+<ul>
+  <% @order.order_items.each do |item| %>
+    <li>
+      <%= item.product.name %> (Quantity: <%= item.quantity %>) - <%= number_to_currency(item.total_price) %>
+    </li>
+  <% end %>
+</ul>
+
+<p><strong>Subtotal:</strong> <%= number_to_currency(@order.subtotal) %></p>
+<p><strong>Taxes:</strong> <%= number_to_currency(@order.gst + @order.pst + @order.hst) %></p>
+<p><strong>Total:</strong> <%= number_to_currency(@order.total) %></p>
+
+<%= link_to 'Back to Orders', orders_path %>

@@ -1,0 +1,38 @@
+<h1>New Order</h1>
+
+<%= form_with model: @order, local: true do |form| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# Fields for the customer %>
+  <%= form.fields_for :customer_attributes, @customer do |customer_fields| %>
+    <div class="field">
+      <%= customer_fields.label :first_name %>
+      <%= customer_fields.text_field :first_name, id: :customer_first_name %>
+    </div>
+
+    <div class="field">
+      <%= customer_fields.label :last_name %>
+      <%= customer_fields.text_field :last_name, id: :customer_last_name %>
+    </div>
+
+  <% end %>
+
+  <%# Add fields for the order if there are any %>
+  <%# ... %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', orders_path %>
