@@ -27,6 +27,4 @@ class Customer < ApplicationRecord
     %w[first_name last_name address city province postal_code email phone_number]
   end
 
-  # Add any custom methods or callbacks needed by your application here
-
 end

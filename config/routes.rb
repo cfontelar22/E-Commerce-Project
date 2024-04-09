@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   
   # Checkout Pages routes
 
-  resources :orders, only: [:show, :create, :new]
+  resources :orders, only: [:show, :create]
   # This route will handle displaying the checkout form
   get '/checkout', to: 'checkout#new', as: 'new_checkout'
 
