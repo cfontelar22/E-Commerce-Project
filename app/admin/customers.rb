@@ -1,18 +1,32 @@
-ActiveAdmin.register Customer do
+ActiveAdmin.register Order do
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :first_name, :last_name, :email, :phone, :address
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:first_name, :last_name, :email, :phone, :address]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
+
+  show do
+    attributes_table do
+      row :customer do |order|
+        link_to order.customer.email, admin_customer_path(order.customer)
+      end
+      row :subtotal
+      row :gst
+      row :pst
+      row :hst
+      row :total
+      row :address
+      row :created_at
+      row :updated_at
+    end
+
+    panel "Products" do
+      table_for order.order_items.includes(:product) do
+        column :product do |item|
+          link_to item.product.name, admin_product_path(item.product)
+        end
+        column :quantity
+        column :price
+        column :total_price
+
+      end
+    end
+  end
+
 end

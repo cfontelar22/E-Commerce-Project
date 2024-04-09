@@ -2,21 +2,24 @@ class CheckoutController < ApplicationController
   before_action :set_cart, only: [:new, :create]
   before_action :set_customer, only: [:new, :create]
 
- def new
-  @order = Order.new
-  @cart.items.each do |cart_item|
-    product = Product.find(cart_item['product_id'])
-    @order.order_items.build(product: product, quantity: cart_item['quantity'], price: product.price)
+  def new
+    @order = Order.new
+    @cart = Cart.new(session[:cart_items] || [])
+    @total_price = @cart.total_price
+    @customer = Customer.new
+    set_provinces
   end
-  @customer = Customer.new
-  @total_price = @cart.total_price
-  set_provinces
-end
 
   def create
     ActiveRecord::Base.transaction do
       # Initialize a new Order from the order_params, which should include nested attributes for the customer
       @order = Order.new(order_params)
+      @order.subtotal = calculate_subtotal(@order)
+
+      taxes = calculate_taxes(@order.customer.province, @order.subtotal)
+      @order.gst = taxes[:gst]
+      @order.pst = taxes[:pst]
+      @order.hst = taxes[:hst]
       
       if @order.save
         # Clear the cart
