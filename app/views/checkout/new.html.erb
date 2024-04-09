@@ -1,0 +1,39 @@
+<%= form_with model: @order, url: orders_path, method: :post, local: true, data: { turbo: false } do |form| %>
+
+    <%= form.fields_for :customer, @order.build_customer do |customer_fields| %>
+      <div>
+        <%= customer_fields.label :first_name %>
+        <%= customer_fields.text_field :first_name %>
+      </div>
+      <div>
+        <%= customer_fields.label :last_name %>
+        <%= customer_fields.text_field :last_name %>
+      </div>
+      <div>
+        <%= customer_fields.label :address %>
+        <%= customer_fields.text_field :address %>
+      </div>
+      <div>
+        <%= customer_fields.label :city %>
+        <%= customer_fields.text_field :city %>
+      </div>
+      <div>
+        <%= customer_fields.label :province %>
+        <%= customer_fields.select :province, options_for_select(@provinces_in_canada) %>
+        </div>
+      <div>
+        <%= customer_fields.label :postal_code %>
+        <%= customer_fields.text_field :postal_code %>
+      </div>
+      <div>
+        <%= customer_fields.label :email %>
+        <%= customer_fields.email_field :email %>
+      </div>
+      <div>
+        <%= customer_fields.label :phone_number %>
+        <%= customer_fields.telephone_field :phone_number %>
+      </div>
+    <% end %>
+  
+    <%= form.submit "Place Order", class: 'place-order-btn' %>
+  <% end %>
