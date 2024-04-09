@@ -24,4 +24,4 @@
 <p><strong>Taxes:</strong> <%= number_to_currency(@order.gst + @order.pst + @order.hst) %></p>
 <p><strong>Total:</strong> <%= number_to_currency(@order.total) %></p>
 
-<%= link_to 'Back to Orders', cart_path %>
+<%= link_to 'Back to Orders', orders_path %>

@@ -15,8 +15,6 @@ Rails.application.routes.draw do
   # This route will handle the form submission
   post 'checkout', to: 'checkout#create', as: 'create_checkout'
 
-
-
   # Root path for landing page
   root to: 'pages#home'
 
@@ -44,4 +42,3 @@ Rails.application.routes.draw do
     resources :products, only: :index, as: :category_products
   end
 end
-
