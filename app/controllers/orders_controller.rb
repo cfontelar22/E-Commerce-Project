@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
     ActiveRecord::Base.transaction do
       @cart = Cart.new(session[:cart_items] || [])
       @order = Order.new(order_params)
-      build_order_items(@cart) # This should add order_items to @order
+      build_order_items( @cart) # Pass the order and cart to the method
 
       @subtotal = @cart.calculate_subtotal
       taxes = calculate_taxes(@order.customer.province, @subtotal)

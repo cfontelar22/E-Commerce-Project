@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   
   # Checkout Pages routes
 
-  resources :orders, only: [:show, :create]
+  resources :orders, only: [:show, :create, :new]
   # This route will handle displaying the checkout form
   get '/checkout', to: 'checkout#new', as: 'new_checkout'
 
@@ -33,8 +33,9 @@ Rails.application.routes.draw do
  # This route handles showing the order summary after a purchase
   get 'orders/:id/summary', to: 'orders#index', as: 'order_summary'
 
+
   # Order routes
-  resources :orders, only: [:show, :create, :new]
+  resources :orders, only: [:index, :show, :create, :new]
   
 
   # Categories routes
