@@ -1,6 +1,7 @@
 class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
-  :recoverable, :rememberable, :validatable
+  :recoverable, :rememberable, :trackable, :validatable
+  
 
   # Associations
   has_many :orders, dependent: :destroy

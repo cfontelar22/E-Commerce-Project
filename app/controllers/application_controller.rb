@@ -18,9 +18,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def configure_permitted_parameters
-    added_attrs = [:first_name, :last_name, :address, :city, :province, :postal_code, :phone_number]
+    def configure_permitted_parameters
+      # For additional fields in app/views/devise/registrations/new.html.erb
       devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :address, :city, :province, :postal_code, :phone_number])
+  
+      # For additional fields in app/views/devise/registrations/edit.html.erb
       devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :address, :city, :province, :postal_code, :phone_number])
     end
 end

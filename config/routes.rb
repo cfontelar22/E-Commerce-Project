@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :admins, ActiveAdmin::Devise.config
   devise_for :customers
-
+ 
   # Static Pages routes
   get '/about', to: 'pages#about', as: 'about'
   get '/contact', to: 'pages#contact', as: 'contact'
