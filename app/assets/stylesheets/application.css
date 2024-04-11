@@ -408,3 +408,181 @@ th, td {
 .checkout-btn:hover {
   background-color: #617562; 
 }
+
+/* Order Summary */
+
+.order-summary {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.order-details p,
+.totals p {
+  margin: 0 0 10px;
+}
+
+.totals {
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.total-amount {
+  float: right;
+  font-weight: bold;
+}
+
+.order-item {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Checkout Form */ 
+
+.checkout-form-card {
+  margin-top: 2em; 
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+/* Style all text fields, email inputs, selects, and telephone fields uniformly */
+.checkout-form-card input[type="text"],
+.checkout-form-card input[type="email"],
+.checkout-form-card input[type="tel"],
+.checkout-form-card select {
+  width: 100%; /* Full width */
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in element's width */
+}
+
+/* Style the submit button */
+.checkout-form-card input[type="submit"] {
+  width: 100%;
+  background-color: #2f928a;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Add a hover effect for the submit button */
+.checkout-form-card input[type="submit"]:hover {
+  background-color: #9ca89d;
+}
+
+/* Add some spacing and change the font size for labels for better readability */
+.checkout-form-card label {
+  margin-top: 10px;
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Adjust the layout for smaller screens */
+@media (max-width: 768px) {
+  .checkout-form-card {
+    width: 90%;
+    padding: 15px;
+  }
+}
+
+/* SignUp Styles */
+.sign-up {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto; /* Aligns to the right */
+}
+
+.sign-up .nav-item {
+  margin-left: 15px; /* Spacing between login and register */
+}
+
+.sign-up a {
+  background: #3d3939;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 0.3em 0.6em;
+  transition: all 0.3s ease;
+}
+
+.sign-up a:hover {
+  background: #555;
+  color: #ddd;
+}
+
+.sign-up .nav-link {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Base Styles for Form */
+.signup-form .form-field {
+  margin-bottom: 20px;
+}
+
+.signup-form .form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Style for .sign-up form inputs */
+.signup-form .form-input {
+  width: calc(100% - 16px); /* Adjusting width to ensure padding doesn't expand beyond intended */
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding is included in total width/height */
+}
+
+/* Focus state for form inputs to improve usability */
+.signup-form .form-input:focus {
+  border-color: #007bff; /* Bright blue to highlight focus */
+  box-shadow: 0 0 0 2px rgba(0,123,255,.25); /* Adds a glow effect on focus */
+}
+
+/* Styling for the submit button to make it more appealing */
+.signup-form .form-actions .form-submit {
+  background-color: #007bff; /* Blue shade */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for the submit button */
+.signup-form .form-actions .form-submit:hover {
+  background-color: #0056b3; /* Slightly darker blue on hover */
+}
+
+/* Error messages styling for better visibility */
+.error_messages {
+  background-color: #f8d7da; /* Light red */
+  border-color: #f5c2c7; /* Slightly darker border */
+  color: #842029; /* Dark text for contrast */
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

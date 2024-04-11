@@ -1,0 +1,64 @@
+<h2 class="form-title">Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "signup-form" }) do |f| %>
+  <%= render "customers/shared/error_messages", resource: resource %>
+
+  <div class="form-field">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :address %>
+    <%= f.text_field :address, class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :city %>
+    <%= f.text_field :city, class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :province %>
+    <%= f.text_field :province, class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :postal_code %>
+    <%= f.text_field :postal_code, class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :phone_number %>
+    <%= f.telephone_field :phone_number, class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %>
+    <%= f.password_field :password, autocomplete: "new-password", class: 'form-input' %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "Sign up", class: 'form-submit' %>
+  </div>
+<% end %>
+
+<%= render "customers/shared/links" %>

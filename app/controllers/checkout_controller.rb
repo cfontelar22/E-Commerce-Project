@@ -3,7 +3,7 @@ class CheckoutController < ApplicationController
   before_action :set_customer, only: [:new, :create]
 
   def new
-    @order = Order.new
+    # @order = Order.new
     @cart = Cart.new(session[:cart_items] || [])
     @total_price = @cart.total_price
     @customer = Customer.new
@@ -25,7 +25,7 @@ class CheckoutController < ApplicationController
         # Clear the cart
         clear_cart
         # Redirect to the order summary page
-        redirect_to order_summary_path(@order), notice: 'Order was successfully placed.'
+        redirect_to order_path(@order), notice: 'Order was successfully placed.'
       else
         # If there was a problem saving the order, handle it here
         set_provinces
@@ -60,6 +60,10 @@ class CheckoutController < ApplicationController
     @customer = session[:customer_id] ? Customer.find_by(id: session[:customer_id]) : Customer.new
   end
 
+  def calculate_subtotal(order)
+    order.order_items.sum(&:total_price)
+  end
+
   def calculate_taxes(province, subtotal)
     set_provinces
     province_abbr = @provinces_in_canada[province]
@@ -81,6 +85,7 @@ class CheckoutController < ApplicationController
 
     { gst: gst, pst: pst, hst: hst, total: subtotal + gst + pst + hst }
   end
+
 
   def set_provinces
     @provinces_in_canada = {

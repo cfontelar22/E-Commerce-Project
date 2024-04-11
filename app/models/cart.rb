@@ -7,7 +7,6 @@ class Cart
     end
   end
 
-  # Make sure total_price is a public method
   def total_price
     @items.sum do |item|
       product = Product.find(item['product_id'])
@@ -36,7 +35,6 @@ class Cart
     @items.delete_if { |item| item['product_id'] == product_id }
   end
 
-  # Helper method to get a list of products
   def products
     @items.map do |item|
       product = Product.find_by(id: item['product_id'])
@@ -44,7 +42,6 @@ class Cart
     end.compact
   end
 
-  # Make calculate_subtotal public
   def calculate_subtotal
     total_price
   end

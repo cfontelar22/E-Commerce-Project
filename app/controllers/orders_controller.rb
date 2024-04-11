@@ -1,69 +1,68 @@
 class OrdersController < ApplicationController
-  before_action :set_cart_data, only: [:new, :create]
+  before_action :authenticate_customer!
+  before_action :set_cart_data, only: [:create]
 
   def show
     @order = Order.find(params[:id])
-  end
-
-  def new
-    @order = Order.new
-    @order.build_customer
+    logger.debug "Order items: #{@order.order_items.inspect}"
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      @cart = Cart.new(session[:cart_items] || [])
-      @order = Order.new(order_params)
-      build_order_items( @cart) # Pass the order and cart to the method
+    @order = current_customer.orders.build(order_params)
+    build_order_items(@cart)
 
-      @subtotal = @cart.calculate_subtotal
-      taxes = calculate_taxes(@order.customer.province, @subtotal)
 
-      # Assign values to order attributes
-      @order.subtotal = @subtotal
-      @order.gst = taxes[:gst]
-      @order.pst = taxes[:pst]
-      @order.hst = taxes[:hst]
-      @order.total = taxes[:total]
-
-      if @order.save
-        session[:cart] = nil
-        redirect_to order_path(@order), notice: 'Order was successfully placed.'
-      else
-        render :new, alert: @order.errors.full_messages.to_sentence
-      end
-    rescue ActiveRecord::RecordInvalid => e
-      render :new, alert: "There was an error placing your order: #{e.record.errors.full_messages.to_sentence}"
+    if @order.save
+      # Clear the cart session
+      session[:cart_items] = nil
+      # Redirect to the show order path with the notice
+      redirect_to order_path(@order), notice: 'Order was successfully placed.'
+    else
+      # If there are errors, log them and redirect back
+      Rails.logger.info "Order save failed: #{@order.errors.full_messages.join(", ")}"
+      flash[:alert] = 'There was a problem placing your order: ' + @order.errors.full_messages.to_sentence
+      redirect_back(fallback_location: root_path)
     end
   end
   
   private
-  
-  def build_order_items(cart)
-    cart.items.each do |item_data|
-      product = Product.find(item_data['product_id'])
-      @order.order_items.build(product: product, quantity: item_data['quantity'], price: product.price)
-    end
-    @order.subtotal = @order.order_items.sum(&:total_price)
-    tax_result = calculate_taxes(@order.customer.province, @order.subtotal)
-    @order.assign_attributes(tax_result) # Assign tax attributes to @order
-  end
 
   def set_cart_data
-    session[:cart] ||= [] 
-    @cart = Cart.new(session[:cart])
+    @cart = Cart.new(session[:cart_items] || [])
   end
-end
 
+  def build_order_items(cart)
+    
+    cart.items.each do |item_data|
+      product = Product.find(item_data['product_id'])
+      unless product.nil?
+        @order.order_items.build(
+          product: product,
+          quantity: item_data['quantity'],
+          price: product.price
+        )
+      end
+    end
+  end
+  
+  
   def order_params
-    params.require(:order).permit(
-      :subtotal, :gst, :pst, :hst, :total,
-      customer_attributes: [:first_name, :last_name, :email, :phone_number, :address, :city, :province, :postal_code]
-    )
+  params.require(:order).permit(:subtotal, :gst, :pst, :hst, :total,
+                                customer_attributes: [:address, :city, :province, :postal_code, :phone_number],
+                                order_items_attributes: [:product_id, :quantity, :price])
+end
+  
+
+  def address_provided?
+    params[:address].present? && params[:city].present? && params[:province].present? && params[:postal_code].present?
+  end
+  
+  def address_params
+    params.permit(:address, :city, :province, :postal_code, :phone_number)
   end
 
   def calculate_subtotal
-    order_items.sum(&:total_price) # Ensure you have a 'total_price' method in OrderItem
+    order_items.sum(&:total_price) 
   end
 
   def calculate_taxes(province, subtotal)
@@ -97,3 +96,4 @@ end
 
     { gst: gst, pst: pst, hst: hst, total: subtotal + gst + pst + hst }
   end
+end

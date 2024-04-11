@@ -1,39 +1,44 @@
-<%= form_with model: @order, url: orders_path, method: :post, local: true, data: { turbo: false } do |form| %>
+<%= form_with model: @order, url: orders_path, method: :post, local: true, data: { turbo: false }, class: 'checkout-form' do |form| %>
+  <div class="checkout-form-card">
+    <% if current_customer.address.blank? || current_customer.city.blank? || current_customer.province.blank? || current_customer.postal_code.blank? || current_customer.phone_number.blank? %>
+      <div class="customer-details">
+        <h3>Shipping Address</h3>
+        
+        <div class="form-group">
+          <%= form.label :address, class: 'form-label' %>
+          <%= form.text_field :address, value: current_customer.address, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.label :city, class: 'form-label' %>
+          <%= form.text_field :city, value: current_customer.city, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.label :province, class: 'form-label' %>
+          <%= form.select :province, options_for_select(@provinces_in_canada.keys, selected: current_customer.province), {}, { class: 'form-select' } %>
+        </div>
+        <div class="form-group">
+          <%= form.label :postal_code, class: 'form-label' %>
+          <%= form.text_field :postal_code, value: current_customer.postal_code, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.label :phone_number, class: 'form-label' %>
+          <%= form.telephone_field :phone_number, value: current_customer.phone_number, class: 'form-control' %>
+        </div>
+      </div>
+    <% end %>
 
-  <%= form.fields_for :customer, @order.build_customer do |customer_fields| %>
-    <div>
-      <%= customer_fields.label :first_name %>
-      <%= customer_fields.text_field :first_name %>
+    <div class="order-items">
+      <% @cart.items.each_with_index do |item, index| %>
+        <% product = Product.find(item["product_id"]) %>
+        <%= form.hidden_field :order_items_attributes, name: "order[order_items_attributes][#{index}][product_id]", value: item["product_id"] %>
+        <%= form.hidden_field :order_items_attributes, name: "order[order_items_attributes][#{index}][quantity]", value: item["quantity"] %>
+        <div class="cart-item">
+          <p>Product Name: <%= product.name %></p>
+          <p>Quantity: <%= item["quantity"] %></p>
+        </div>
+      <% end %>
     </div>
-    <div>
-      <%= customer_fields.label :last_name %>
-      <%= customer_fields.text_field :last_name %>
-    </div>
-    <div>
-      <%= customer_fields.label :address %>
-      <%= customer_fields.text_field :address %>
-    </div>
-    <div>
-      <%= customer_fields.label :city %>
-      <%= customer_fields.text_field :city %>
-    </div>
-    <div>
-      <%= customer_fields.label :province %>
-      <%= customer_fields.select :province, options_for_select(provinces_in_canada) %>
-    </div>
-    <div>
-      <%= customer_fields.label :postal_code %>
-      <%= customer_fields.text_field :postal_code %>
-    </div>
-    <div>
-      <%= customer_fields.label :email %>
-      <%= customer_fields.email_field :email %>
-    </div>
-    <div>
-      <%= customer_fields.label :phone_number %>
-      <%= customer_fields.telephone_field :phone_number %>
-    </div>
-  <% end %>
 
-  <%= form.submit "Place Order", class: 'place-order-btn' %>
+    <%= form.submit "Place Order", class: 'btn btn-primary place-order-btn' %>
+  </div>
 <% end %>

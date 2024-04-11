@@ -1,27 +1,43 @@
-<h1>Order Summary</h1>
+<div class="order-summary">
+  <h1>Order Summary</h1>
 
-<p><strong>Order ID:</strong> <%= @order.id %></p>
-<p><strong>Date:</strong> <%= @order.created_at.strftime("%B %e, %Y") %></p>
+  <div class="order-details">
+    <p><strong>Order ID:</strong> <%= @order.id %></p>
+    <p><strong>Date:</strong> <%= @order.created_at.strftime("%B %e, %Y") %></p>
+  </div>
 
-<h2>Customer Information:</h2>
-<p><strong>Name:</strong> <%= @order.customer.last_name %></p>
-<p><strong>Email:</strong> <%= @order.customer.email %></p>
-<p><strong>Address:</strong> <%= @order.customer.address %></p>
-<p><strong>City:</strong> <%= @order.customer.city %></p>
-<p><strong>Province:</strong> <%= @order.customer.province %></p>
-<p><strong>Postal Code:</strong> <%= @order.customer.postal_code %></p>
+  <h2>Customer Information:</h2>
+  <div class="order-details">
+    <p><strong>Name:</strong> <%= [@order.customer.first_name, @order.customer.last_name].join(' ') %></p>
+    <p><strong>Email:</strong> <%= @order.customer.email %></p>
+    <p><strong>Address:</strong> <%= @order.customer.address %></p>
+    <p><strong>City:</strong> <%= @order.customer.city %></p>
+    <p><strong>Province:</strong> <%= @order.customer.province %></p>
+    <p><strong>Postal Code:</strong> <%= @order.customer.postal_code %></p>
+  </div>
 
-<h2>Order Items:</h2>
-<ul>
+  <h2>Order Items:</h2>
+  <div class="order-items">
   <% @order.order_items.each do |item| %>
-    <li>
-      <%= item.product.name %> (Quantity: <%= item.quantity %>) - <%= number_to_currency(item.total_price) %>
-    </li>
-  <% end %>
-</ul>
+    <div class="order-item">
+      <% if item.product.image.attached? %>
+        <%= image_tag(item.product.image, class: 'product-image') %>
+      <% else %>
+        <p>No image available</p>
+      <% end %>
+      <p><%= item.product.name %> (Quantity: <%= item.quantity %>) - <%= number_to_currency(item.total_price) %></p>
+      </div>
+    <% end %>
+  </div>
 
-<p><strong>Subtotal:</strong> <%= number_to_currency(@order.subtotal) %></p>
-<p><strong>Taxes:</strong> <%= number_to_currency(@order.gst + @order.pst + @order.hst) %></p>
-<p><strong>Total:</strong> <%= number_to_currency(@order.total) %></p>
 
-<%= link_to 'Back to Orders', orders_path %>
+  <div class="totals">
+    <p><span>Subtotal:</span> <span class="total-amount"><%= number_to_currency(@order.subtotal) %></span></p>
+    <p><span>Taxes:</span> 
+      <span class="total-amount">
+        <%= number_to_currency(@order.gst.to_d + @order.pst.to_d + @order.hst.to_d) %>
+      </span>
+    </p>
+    <p><span>Total:</span> <span class="total-amount"><%= number_to_currency(@order.total) %></span></p>
+  </div>
+</div>
