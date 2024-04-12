@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>KapeKapamilya</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_importmap_tags %>
-  </head>
-  
+<head>
+  <title>KapeKapamilya</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_importmap_tags %>
+</head>
   <body>
 
     <nav>
@@ -46,6 +45,21 @@
     </div>
       <% end %>
     </nav>
+
+    <div class="flash-messages">
+    <% flash.each do |key, value| %>
+      <% if value.is_a?(Hash) %>
+        <div class="<%= key %>">
+          <%= value[:message] %>
+          <% if value[:order_id] %>
+            <p>Order ID: <%= value[:order_id] %></p>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="<%= key %>"><%= value %></div>
+      <% end %>
+    <% end %>
+  </div>
 
     <%= yield %>
     

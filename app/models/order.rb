@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   
   # Establishes association with the OrderItem model
   has_many :order_items, dependent: :destroy
+  
   # Allows for nested attributes for order items
   accepts_nested_attributes_for :order_items
   
