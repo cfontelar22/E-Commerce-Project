@@ -37,7 +37,6 @@
     <p><span>GST Taxes:</span> <span class="total-amount"><%= number_to_currency(@order.gst || 0) %></span></p>
     <p><span>PST Taxes:</span> <span class="total-amount"><%= number_to_currency(@order.pst || 0) %></span></p>
     <p><span>HST Taxes:</span> <span class="total-amount"><%= number_to_currency(@order.hst || 0) %></span></p>
-    <p><span>Total Taxes:</span> <span class="total-amount"><%= number_to_currency(@order.gst.to_d + @order.pst.to_d + @order.hst.to_d || 0) %></span></p>
     <p><span>Total Price:</span> <span class="total-amount"><%= number_to_currency(@order.total || 0) %></span></p>
   </div>
 </div>
