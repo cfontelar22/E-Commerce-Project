@@ -21,7 +21,6 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-input' %>
   </div>
 
-  <!-- Additional fields for address and phone number -->
   <div class="form-field">
     <%= f.label :first_name %>
     <%= f.text_field :first_name, class: 'form-input' %>
@@ -43,9 +42,10 @@
   </div>
 
   <div class="form-field">
-    <%= f.label :province %>
-    <%= f.text_field :province, class: 'form-input' %>
-  </div>
+  <%= f.label :province %>
+  <%= f.select :province, options_for_select(provinces_in_canada.map { |k, v| [v, k] }), {}, { class: 'form-input' } %>
+</div>
+
 
   <div class="form-field">
     <%= f.label :postal_code %>

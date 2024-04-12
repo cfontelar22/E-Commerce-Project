@@ -5,6 +5,10 @@ class Customer < ApplicationRecord
   # Associations
   has_many :orders, dependent: :destroy
 
+  # Validations
+  validates_presence_of :province
+
+
   # Ransack scopes
   scope :with_orders, -> { joins(:orders).distinct }
 

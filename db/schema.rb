@@ -111,10 +111,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_143257) do
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
     t.string "encrypted_password"
-    t.integer "sign_in_count"
+    t.string "current_sign_in_ip"
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["sign_in_count"], name: "index_customers_on_sign_in_count"
   end
