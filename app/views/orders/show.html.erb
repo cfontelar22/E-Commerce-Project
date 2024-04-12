@@ -8,7 +8,7 @@
 
   <h2>Customer Information:</h2>
   <div class="order-details">
-    <p><strong>Name:</strong> <%= [@order.customer.first_name, @order.customer.last_name].join(' ') %></p>
+    <p><strong>Name:</strong> <%= [@order.customer.first_name, @order.customer.last_name].compact.join(' ') %></p>
     <p><strong>Email:</strong> <%= @order.customer.email %></p>
     <p><strong>Address:</strong> <%= @order.customer.address %></p>
     <p><strong>City:</strong> <%= @order.customer.city %></p>
@@ -18,26 +18,25 @@
 
   <h2>Order Items:</h2>
   <div class="order-items">
-  <% @order.order_items.each do |item| %>
-    <div class="order-item">
-      <% if item.product.image.attached? %>
-        <%= image_tag(item.product.image, class: 'product-image') %>
-      <% else %>
-        <p>No image available</p>
-      <% end %>
-      <p><%= item.product.name %> (Quantity: <%= item.quantity %>) - <%= number_to_currency(item.total_price) %></p>
+    <% @order.order_items.each do |item| %>
+      <div class="order-item">
+        <% if item.product.image.attached? %>
+          <%= image_tag(item.product.image, class: 'product-image') %>
+        <% else %>
+          <p>No image available</p>
+        <% end %>
+        <p><%= item.product.name %> (Quantity: <%= item.quantity %>) - <%= number_to_currency(item.total_price || 0) %></p>
       </div>
     <% end %>
   </div>
 
-
   <div class="totals">
-    <p><span>Subtotal:</span> <span class="total-amount"><%= number_to_currency(@order.subtotal) %></span></p>
+    <p><span>Subtotal:</span> <span class="total-amount"><%= number_to_currency(@order.subtotal || 0) %></span></p>
     <p><span>Taxes:</span> 
       <span class="total-amount">
-        <%= number_to_currency(@order.gst.to_d + @order.pst.to_d + @order.hst.to_d) %>
+        <%= number_to_currency((@order.gst.to_d + @order.pst.to_d + @order.hst.to_d) || 0) %>
       </span>
     </p>
-    <p><span>Total:</span> <span class="total-amount"><%= number_to_currency(@order.total) %></span></p>
+    <p><span>Total:</span> <span class="total-amount"><%= number_to_currency(@order.total || 0) %></span></p>
   </div>
 </div>
