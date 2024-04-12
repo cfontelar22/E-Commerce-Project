@@ -65,24 +65,29 @@ end
   end
 
   def calculate_taxes(province, subtotal)
-    # Define tax rates
+    # Define federal GST rate
     gst_rate = 0.05
+  
+    # Define PST rates for provinces with separate GST and PST
     pst_rates = {
       'BC' => 0.07, # British Columbia
       'MB' => 0.07, # Manitoba
       'SK' => 0.06, # Saskatchewan
+      'QC' => 0.09975 # Quebec
     }
+  
+    # Define HST rates for provinces with Harmonized Sales Tax
     hst_rates = {
       'NL' => 0.15, # Newfoundland and Labrador
       'NB' => 0.15, # New Brunswick
       'NS' => 0.15, # Nova Scotia
       'PE' => 0.15, # Prince Edward Island
-      'ON' => 0.13, # Ontario
+      'ON' => 0.13  # Ontario
     }
-
+  
     # Initialize taxes
     gst = pst = hst = 0
-
+  
     # Apply HST if applicable
     if hst_rates[province]
       hst = subtotal * hst_rates[province]
@@ -92,7 +97,14 @@ end
       # Apply PST if applicable
       pst = subtotal * pst_rates[province] if pst_rates[province]
     end
-
+  
+    # Provinces and territories without PST or HST
+    no_pst_or_hst = ['YT', 'NT', 'NU'] # Yukon, Northwest Territories, Nunavut
+    if no_pst_or_hst.include?(province)
+      gst = subtotal * gst_rate
+      pst = 0
+    end
+  
     { gst: gst, pst: pst, hst: hst, total: subtotal + gst + pst + hst }
   end
-end
+end  

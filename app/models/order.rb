@@ -31,7 +31,6 @@ class Order < ApplicationRecord
     'BC' => 0.07,
     'MB' => 0.07,
     'SK' => 0.06,
-    # Add other provinces as needed
   }
   HST_RATES = {
     'NL' => 0.15,
@@ -39,7 +38,6 @@ class Order < ApplicationRecord
     'NS' => 0.15,
     'PE' => 0.15,
     'ON' => 0.13,
-    # Add other provinces as needed
   }
 
   # A method to calculate taxes based on the customer's province and the order subtotal
