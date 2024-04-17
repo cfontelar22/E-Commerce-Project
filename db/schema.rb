@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_11_143257) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_16_234330) do
   create_table "abouts", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
@@ -115,6 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_143257) do
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
+    t.string "stripe_customer_id"
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["sign_in_count"], name: "index_customers_on_sign_in_count"
   end
@@ -140,6 +141,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_143257) do
     t.text "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
+    t.string "payment_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 
@@ -168,6 +171,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_143257) do
     t.text "grind_option"
     t.boolean "on_sale"
     t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  create_table "provinces", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

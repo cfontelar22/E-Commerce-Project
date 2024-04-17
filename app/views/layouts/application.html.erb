@@ -5,64 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_importmap_tags %>
 </head>
-  <body>
+<body>
+  <%= render 'layouts/navigation' %>
+  <%= render 'layouts/flash_messages' %> 
 
-    <nav>
-      <%= link_to 'Home', root_path, class: 'nav-link' %>
-      <div class="dropdown">
-        <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Coffee
-        </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <%= link_to 'All Coffee', products_path, class: 'dropdown-item' %>
-          <% Category.all.each do |category| %>
-            <%= link_to category.name, category_path(category), class: 'dropdown-item' %>
-          <% end %>
-        </div>
-      </div>
-      <%= link_to 'About Us', about_path, class: 'nav-link' %>
-      <%= link_to 'Contact', contact_path, class: 'nav-link' %>
-      <div class="cart-summary">
-        <%= link_to "Cart (#{@item_count})", cart_path, class: 'nav-link', id: 'cart-count' %>
-      </div>
-
-    <div class="sign-up">
-      <% if customer_signed_in? %>
-        <div class="nav-item">
-          <%= "Signed in as #{current_customer.first_name}" %>
-          <%= button_to('Logout', destroy_customer_session_path, method: :delete, form: { class: 'inline-form' }, class: 'nav-link') %>
-        </div>
-      <% else %>
-        <div class="nav-item">
-          <%= link_to('Login', new_customer_session_path, class: 'nav-link') %>
-        </div>
-        <div class="nav-item">
-          <%= link_to('Register', new_customer_registration_path, class: 'nav-link') %>
-        </div>
-    </div>
-      <% end %>
-    </nav>
-
-    <div class="flash-messages">
-    <% flash.each do |key, value| %>
-      <% if value.is_a?(Hash) %>
-        <div class="<%= key %>">
-          <%= value[:message] %>
-          <% if value[:order_id] %>
-            <p>Order ID: <%= value[:order_id] %></p>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="<%= key %>"><%= value %></div>
-      <% end %>
-    <% end %>
-  </div>
-
-    <%= yield %>
-    
-
-  </body>
+  <%= yield %>
+</body>
 </html>

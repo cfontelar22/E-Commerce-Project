@@ -12,32 +12,33 @@ class CheckoutController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      # Initialize a new Order from the order_params, which should include nested attributes for the customer
       @order = Order.new(order_params)
       @order.subtotal = calculate_subtotal(@order)
+      calculate_and_assign_taxes(@order)
 
-      taxes = calculate_taxes(@order.customer.province, @order.subtotal)
-      @order.gst = taxes[:gst]
-      @order.pst = taxes[:pst]
-      @order.hst = taxes[:hst]
-      
       if @order.save
-        # Clear the cart
-        clear_cart
-        # Redirect to the order summary page
-        redirect_to order_path(@order), notice: 'Order was successfully placed.'
+        # Handle Stripe payment
+        if handle_payment(@order)
+          clear_cart
+          redirect_to order_path(@order), notice: 'Order was successfully placed.'
+        else
+          @order.destroy
+          flash.now[:alert] = 'There was a problem with your payment.'
+          render :new
+        end
       else
-        # If there was a problem saving the order, handle it here
         set_provinces
         flash.now[:alert] = 'There was a problem with your order.'
         render :new
       end
+    rescue ActiveRecord::RecordInvalid => e
+      set_provinces
+      flash.now[:alert] = 'An error occurred while processing your order.'
+      render :new
+    rescue Stripe::CardError => e
+      flash.now[:alert] = e.message
+      render :new
     end
-  rescue ActiveRecord::RecordInvalid => e
-    # If there's an exception, handle it here
-    set_provinces
-    flash.now[:alert] = 'An error occurred while processing your order.'
-    render :new
   end
   
   private
@@ -46,6 +47,40 @@ class CheckoutController < ApplicationController
     session_cart = session[:cart] || []
     @cart = Cart.new(session_cart)
   end
+
+  # Handles payment processing and logs each step for debugging purposes
+    def handle_payment(order)
+      Rails.logger.info "handle_payment: Starting payment process for Order ID: #{order.id}"
+      
+      begin
+        # Retrieve the Stripe token from parameters
+        token = params[:stripeToken]
+        
+        # Log the Stripe token received from the front-end
+        Rails.logger.info "handle_payment: Stripe token received: #{token}"
+        
+        # Perform the checkout operation using the Stripe service
+        charge = StripeCheckoutService.checkout(order, token)
+        
+        # Log the result of the checkout operation
+        if charge.paid
+          Rails.logger.info "handle_payment: Payment completed for Order ID: #{order.id}"
+          order.update(payment_status: 'paid', stripe_charge_id: charge.id)
+          return true
+        else
+          Rails.logger.error "handle_payment: Payment failed for Order ID: #{order.id}. Error: #{charge.failure_message}"
+          return false
+        end
+      rescue Stripe::CardError => e
+        # Log Stripe errors (e.g., card declines, invalid requests)
+        Rails.logger.error "handle_payment: StripeError - #{e.message}"
+        raise
+      rescue => e
+        # Log any other type of standard error
+        Rails.logger.error "handle_payment: StandardError - #{e.message}"
+        raise
+      end
+    end
 
   def customer_params
     params.require(:order).permit(:total, customer_attributes: [:first_name, :last_name, :email, :phone_number, :address, :city, :province, :postal_code])[:customer_attributes]

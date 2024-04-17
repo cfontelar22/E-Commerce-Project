@@ -7,23 +7,37 @@ class OrdersController < ApplicationController
     logger.debug "Order items: #{@order.order_items.inspect}"
   end
 
-  def create
+ def create
     @order = current_customer.orders.build(order_params)
-    build_order_items(@cart)
+    build_order_items(@cart) # This populates @order with order_items
 
+    # Calculate subtotal after building order items
+    @order.subtotal = calculate_subtotal
+    taxes = calculate_taxes(@order.customer.province, @order.subtotal)
+    @order.assign_attributes(taxes)
 
-    if @order.save
+    # Start Stripe payment processing
+    stripe_token = params[:stripeToken]
+    payment_status = process_payment(stripe_token, @order.total)
+
+    if payment_status[:success]
+      @order.update(status: 'paid', payment_id: payment_status[:payment_id])
+
       # Clear the cart session
       session[:cart_items] = nil
       # Redirect to the show order path with the notice
       redirect_to order_path(@order), notice: 'Order was successfully placed.'
     else
-      # If there are errors, log them and redirect back
-      Rails.logger.info "Order save failed: #{@order.errors.full_messages.join(", ")}"
-      flash[:alert] = 'There was a problem placing your order: ' + @order.errors.full_messages.to_sentence
+      # If there is an error during payment, log it and redirect back
+      logger.error "Payment failed: #{payment_status[:error]}"
+      flash[:alert] = 'There was a problem with the payment: ' + payment_status[:error]
       redirect_back(fallback_location: root_path)
     end
+  rescue Stripe::CardError => e
+    flash[:alert] = e.message
+    redirect_back(fallback_location: root_path)
   end
+
   private
 
   def set_cart_data
@@ -61,8 +75,9 @@ end
   end
 
   def calculate_subtotal
-    order_items.sum(&:total_price) 
+    @order.order_items.sum(&:total_price) 
   end
+  
 
   def calculate_taxes(province, subtotal)
     # Define federal GST rate
@@ -107,4 +122,26 @@ end
   
     { gst: gst, pst: pst, hst: hst, total: subtotal + gst + pst + hst }
   end
-end  
+
+  def process_payment(stripe_token, total)
+    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+  
+    begin
+      # Since Stripe will throw an error if the token has been used,
+      charge = Stripe::Charge.create(
+        amount: (total * 100).to_i, # Stripe expects the amount in cents
+        currency: 'cad',
+        description: 'Order payment',
+        source: stripe_token
+      )
+  
+      { success: charge.paid, payment_id: charge.id }
+    rescue Stripe::InvalidRequestError => e
+      # Handle the case where the Stripe token has already been used
+      { success: false, error: 'The payment could not be processed because the token has already been used.' }
+    rescue Stripe::CardError => e
+      # Handle any card errors (like insufficient funds, etc.)
+      { success: false, error: e.message }
+    end
+  end
+end 

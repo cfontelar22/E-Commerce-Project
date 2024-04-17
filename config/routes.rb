@@ -27,6 +27,10 @@ Rails.application.routes.draw do
   # Order routes
   resources :orders, only: [:show, :create, :new]
 
+  #Testing Webhooks locally
+  post '/stripe-webhooks', to: 'stripe#webhook'
+
+
   # Categories routes
   resources :categories, only: [:index, :show] do
     # Nested route for products under a category

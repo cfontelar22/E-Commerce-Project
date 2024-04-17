@@ -319,8 +319,7 @@ nav a:hover {
 
 /* On-Sale Product Styling */
 .product.on-sale {
-  border: 2px solid #e74c3c; /* Example red border */
-  position: relative;
+  border: 2px solid #e74c3c;
 }
 
 .sale-badge {
@@ -440,65 +439,85 @@ th, td {
   border-bottom: 1px solid #eee;
 }
 
-/* Checkout Form */ 
+// Checkout Form Styling
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 2em auto;
+  max-width: 800px;
 
-.checkout-form-card {
-  margin-top: 2em; 
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 400px;
-  margin-left: auto; 
-  margin-right: auto; 
-}
-
-/* Style all text fields, email inputs, selects, and telephone fields uniformly */
-.checkout-form-card input[type="text"],
-.checkout-form-card input[type="email"],
-.checkout-form-card input[type="tel"],
-.checkout-form-card select {
-  width: 100%; /* Full width */
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; /* Include padding and border in element's width */
-}
-
-/* Style the submit button */
-.checkout-form-card input[type="submit"] {
-  width: 100%;
-  background-color: #2f928a;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Add a hover effect for the submit button */
-.checkout-form-card input[type="submit"]:hover {
-  background-color: #9ca89d;
-}
-
-/* Add some spacing and change the font size for labels for better readability */
-.checkout-form-card label {
-  margin-top: 10px;
-  display: block;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Adjust the layout for smaller screens */
-@media (max-width: 768px) {
-  .checkout-form-card {
-    width: 90%;
-    padding: 15px;
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 1fr;
   }
 }
+
+.checkout-section {
+  background: $color-light;
+  padding: $padding-standard;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-header {
+  font-size: 1.5em;
+  color: $color-primary;
+  margin-bottom: 1em;
+}
+
+// Separating product summary and payment details
+.product-summary, .payment-details {
+  @extend .checkout-section;
+}
+
+// Styling for form inputs and labels
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form input[type="tel"],
+.checkout-form select,
+.checkout-form-card input[type="text"],
+.checkout-form-card input[type="tel"] {
+  @extend %button-base;
+  background-color: $color-light;
+  border: 1px solid $color-secondary;
+  margin-bottom: 15px;
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+}
+
+.checkout-form label,
+.checkout-form-card label {
+  display: block;
+  margin-bottom: 5px;
+  color: $color-dark;
+}
+
+// Custom styling for the 'Place Order' button
+.place-order-btn {
+  @extend %button-base;
+  background-color: $color-accent;
+  width: 100%;
+  margin-top: 15px;
+  &:hover {
+    background-color: darken($color-accent, 10%);
+  }
+}
+
+// Styling for card details - Using Stripe's UI as a base
+#card-element {
+  @extend %button-base;
+  background-color: $color-light;
+  border: 1px solid $color-secondary;
+  padding: 10px;
+}
+
+#card-errors {
+  color: $error-color;
+  margin-top: 10px;
+}
+
 
 /* SignUp Styles */
 .sign-up {
