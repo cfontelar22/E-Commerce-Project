@@ -15,7 +15,7 @@ gem 'image_processing', '~> 1.2'
 gem 'stripe'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'pg'
-
+gem 'rake'
 
 
 
