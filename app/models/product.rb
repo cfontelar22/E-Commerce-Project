@@ -7,7 +7,6 @@ class Product < ApplicationRecord
   scope :recently_updated, -> { where('updated_at >= ?', 3.days.ago).where.not(id: newly_added.select(:id)) }
   has_many :order_items
 
-
   def image_attached
     errors.add(:image, "must be attached") unless image.attached?
   end
