@@ -110,7 +110,6 @@ body {
   }
 }
 
-
 /* Navbar Styles */
 nav {
   background:  #2e2b2b;
@@ -511,6 +510,11 @@ th, td {
   background-color: $color-light;
   border: 1px solid $color-secondary;
   padding: 10px;
+}
+
+#card-errors {
+  color: $error-color;
+  margin-top: 10px;
 }
 
 

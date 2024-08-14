@@ -8,7 +8,6 @@ class Customer < ApplicationRecord
   # Validations
   validates_presence_of :province
 
-
   # Ransack scopes
   scope :with_orders, -> { joins(:orders).distinct }
 
@@ -26,6 +25,4 @@ class Customer < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[first_name last_name address city province postal_code email phone_number]
   end
-  
-
 end
