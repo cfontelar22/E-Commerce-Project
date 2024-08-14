@@ -10,6 +10,11 @@ gem 'httparty'
 gem 'faker'
 gem 'nokogiri'
 gem 'ransack'
+gem 'bcrypt', '~> 3.1.7'
+gem 'image_processing', '~> 1.2'
+gem 'stripe'
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'pay', '~> 3.0'
 
 
 

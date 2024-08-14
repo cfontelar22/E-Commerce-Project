@@ -8,6 +8,8 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.enable_reloading = true
 
+  config.active_storage.variant_processor = :vips
+  
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -36,6 +38,9 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  ####
+  config.action_mailer.default_url_options = { host: "http://localhost:3000" }
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -61,6 +66,9 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  #####
+  config.active_record.sqlite3_production_warning = false
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

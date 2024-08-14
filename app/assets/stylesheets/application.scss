@@ -1,0 +1,604 @@
+// Variables for colors, fonts, and common dimensions
+$font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$color-primary: #333;
+$color-secondary: #555;
+$color-light: #fff;
+$color-dark: #222;
+$color-accent: #396462;
+$color-hover: #292f36;
+$padding-standard: 20px;
+$breakpoint-mobile: 768px;
+
+// Placeholder selector for common button styling
+%button-base {
+  padding: 10px 15px;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: $color-light;
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+body {
+  font-family: $font-main;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+}
+
+.banner {
+  text-align: center;
+  padding: 3em 0;
+  background: #333;
+  color: $color-light;
+
+  h1 {
+    font-size: 2.5em;
+    margin: 0 0 0.5em;
+  }
+
+  p {
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 800px;
+    padding: 0 $padding-standard;
+  }
+}
+
+.featured-products {
+  margin: 2em 0;
+  padding: 1em 0;
+  background: $color-light;
+
+  h2 {
+    text-align: center;
+    font-size: 2em;
+    color: $color-primary;
+    margin-bottom: 0.5em;
+  }
+
+  .section-intro {
+    text-align: center;
+    font-size: 1em;
+    color: $color-secondary;
+    margin-bottom: 2em;
+  }
+}
+
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+
+  .product {
+    background: $color-light;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: center;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    h3, p {
+      color: $color-secondary;
+    }
+
+    .product-image {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      object-fit: contain;
+      margin: 0 auto;
+    }
+  }
+}
+
+.view-product-btn {
+  @extend %button-base;
+  background-color: $color-accent;
+
+  &:hover {
+    background-color: $color-hover;
+  }
+}
+
+/* Navbar Styles */
+nav {
+  background:  #2e2b2b;
+  padding: 0.5em 1em;
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  padding: 0.5em 1em;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background: #555;
+}
+
+.nav-link:last-child {
+  margin-right: 0;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background: #1c1c1c;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  color: white;
+  padding: 0.75em 1em;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #555;
+}
+
+/* Product Details Page */
+.product-details {
+  background: #d0d6d1;
+  border-radius: 8px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 800px; 
+  text-align: center; 
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.product-details h1 {
+  color: #333;
+  font-size: 1.75em; 
+  margin-bottom: 0.5em;
+}
+
+.product-details p {
+  color: #555;
+  margin-bottom: 0.75em;
+}
+
+.product-details strong {
+  display: block; 
+  margin-bottom: 0.25em;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.product-details .product-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.back-btn {
+  display: block;
+  background-color: #396462;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+.back-btn:hover, .add-to-cart-btn:hover {
+  opacity: 0.8; 
+}
+
+/* Add to Cart styling */ 
+.cart {
+  padding: 15px;
+  background-color: #d0d6d1;
+  border-radius: 4px;
+  text-align: center; 
+}
+
+.cart form {
+  display: inline-block;
+  text-align: left;
+}
+
+.cart .quantity-field {
+  padding: 6px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.add-to-cart-btn {
+  background-color: #152918;
+  color: #ffffff;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+}
+
+.add-to-cart-btn, .back-btn {
+  display: inline-block; 
+  text-align: center;
+}
+
+/* All Products Styles */
+.all-products h2 {
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 0.5em;
+}
+
+.all-products .section-intro {
+  margin-top: 2em; 
+  text-align: center;
+  font-size: 1em;
+  color: #555;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.product .product-description {
+  font-size: 0.9em;
+  color: #666;
+  margin: 0.5em 0 1.5em;
+}
+
+/* Pagination controls */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  margin-top: 20px; 
+  list-style: none;
+  color: #ffffff;
+  opacity: 2px;
+  font-size: 1em;
+  bottom: 0%;
+  position: relative;
+}
+
+
+/* Product Filtering */
+#product-filters {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.1);
+  margin-top: 2em;
+}
+
+#product-filters .filter-option {
+  margin-bottom: 10px;
+}
+
+#product-filters .filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#product-filters .filter-button {
+  padding: 8px 16px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#product-filters .filter-button:hover {
+  background-color: #666666;
+}
+
+/* On-Sale Product Styling */
+.product.on-sale {
+  border: 2px solid #e74c3c;
+}
+
+.sale-badge {
+  content: 'Sale!';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  border-bottom-left-radius: 4px;
+}
+
+/* Cart Styling */
+.shopping-cart {
+  font-family: Arial, sans-serif;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.shopping-cart h1 {
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.quantity-field {
+  width: 60px;
+}
+
+.update-btn, .remove-btn {
+  background-color:  #80afb1;
+  color: rgb(255, 255, 255);
+  padding: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.remove-btn {
+  background-color:  #d16f1e;
+}
+
+.update-btn, .remove-btn:hover {
+  background-color: #505350; 
+}
+
+.cart-total {
+  margin-top: 20px;
+  float: right;
+  font-size: 20px;
+}
+
+.cart-total strong {
+  color: #333;
+}
+
+/* Checkout button Styling */ 
+
+.checkout-btn {
+  background-color:  #292f36;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  padding: 8px 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #617562; 
+}
+
+/* Order Summary */
+
+.order-summary {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.order-details p,
+.totals p {
+  margin: 0 0 10px;
+}
+
+.totals {
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.total-amount {
+  float: right;
+  font-weight: bold;
+}
+
+.order-item {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+// Checkout Form Styling
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 2em auto;
+  max-width: 800px;
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkout-section {
+  background: $color-light;
+  padding: $padding-standard;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-header {
+  font-size: 1.5em;
+  color: $color-primary;
+  margin-bottom: 1em;
+}
+
+// Separating product summary and payment details
+.product-summary, .payment-details {
+  @extend .checkout-section;
+}
+
+// Styling for form inputs and labels
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form input[type="tel"],
+.checkout-form select,
+.checkout-form-card input[type="text"],
+.checkout-form-card input[type="tel"] {
+  @extend %button-base;
+  background-color: $color-light;
+  border: 1px solid $color-secondary;
+  margin-bottom: 15px;
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+}
+
+.checkout-form label,
+.checkout-form-card label {
+  display: block;
+  margin-bottom: 5px;
+  color: $color-dark;
+}
+
+// Custom styling for the 'Place Order' button
+.place-order-btn {
+  @extend %button-base;
+  background-color: $color-accent;
+  width: 100%;
+  margin-top: 15px;
+  &:hover {
+    background-color: darken($color-accent, 10%);
+  }
+}
+
+// Styling for card details - Using Stripe's UI as a base
+#card-element {
+  @extend %button-base;
+  background-color: $color-light;
+  border: 1px solid $color-secondary;
+  padding: 10px;
+}
+
+#card-errors {
+  color: $error-color;
+  margin-top: 10px;
+}
+
+
+/* SignUp Styles */
+.sign-up {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto; /* Aligns to the right */
+}
+
+.sign-up .nav-item {
+  margin-left: 15px; /* Spacing between login and register */
+}
+
+.sign-up a {
+  background: #3d3939;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 0.3em 0.6em;
+  transition: all 0.3s ease;
+}
+
+.sign-up a:hover {
+  background: #555;
+  color: #ddd;
+}
+
+.sign-up .nav-link {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Base Styles for Form */
+.signup-form .form-field {
+  margin-bottom: 20px;
+}
+
+.signup-form .form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Style for .sign-up form inputs */
+.signup-form .form-input {
+  width: calc(100% - 16px); /* Adjusting width to ensure padding doesn't expand beyond intended */
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding is included in total width/height */
+}
+
+/* Focus state for form inputs to improve usability */
+.signup-form .form-input:focus {
+  border-color: #007bff; /* Bright blue to highlight focus */
+  box-shadow: 0 0 0 2px rgba(0,123,255,.25); /* Adds a glow effect on focus */
+}
+
+/* Styling for the submit button to make it more appealing */
+.signup-form .form-actions .form-submit {
+  background-color: #007bff; /* Blue shade */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for the submit button */
+.signup-form .form-actions .form-submit:hover {
+  background-color: #0056b3; /* Slightly darker blue on hover */
+}
+
+/* Error messages styling for better visibility */
+.error_messages {
+  background-color: #f8d7da; /* Light red */
+  border-color: #f5c2c7; /* Slightly darker border */
+  color: #842029; /* Dark text for contrast */
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

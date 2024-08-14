@@ -1,7 +1,10 @@
 <div class="product-details">
   <h1><%= @product.name %></h1>
 
-  <%= image_tag @product.image, class: 'product-image' if @product.image.attached? %>
+
+<% if @product.image.attached? %>
+   <%= image_tag @product.image.variant(resize_to_limit: [500, 500]).processed, class: 'product-image' %>
+<% end %>
 
   <p><%= @product.description %></p>
   <strong>Price:</strong>
@@ -19,14 +22,14 @@
   <strong>Grind Option:</strong>
   <p>[<%= @product.grind_option %>]</p>
 
-<div class="cart">
-  <%= form_tag add_to_cart_cart_path, method: :post do %>
-    <%= hidden_field_tag :product_id, @product.id %>
-    <%= label_tag :quantity, 'Quantity:' %>
-    <%= number_field_tag :quantity, 1, min: 1, max: @product.quantity, class: 'quantity-field' %>
-    <%= submit_tag 'Add to Cart', class: 'add-to-cart-btn' %>
-  <% end %>
-</div>
+  <div class="cart">
+    <%= form_tag add_to_cart_cart_path, method: :post do %>
+      <%= hidden_field_tag :product_id, @product.id %>
+      <%= label_tag :quantity, 'Quantity:' %>
+      <%= number_field_tag :quantity, 1, min: 1, max: @product.quantity, class: 'quantity-field' %>
+      <%= submit_tag 'Add to Cart', class: 'add-to-cart-btn' %>
+    <% end %>
+  </div>
 
   <%= link_to 'Back to Products', products_path, class: 'back-btn' %>
 </div>
